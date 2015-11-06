@@ -12,9 +12,11 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "prepublish": "grunt test"
   },
   "dependencies": {
+    "chalk": "^1.1.1",
     "nodegit": "^0.5.0"
   },
   "devDependencies": {

@@ -13,7 +13,6 @@ module.exports = function(grunt) {
   var path = require('path');
   var fs = require('fs');
   var chalk = require('chalk');
-  var fileSyncCmp = require('file-sync-cmp');
 
   grunt.registerMultiTask('copy-git-index', 'Copy files from git index.', function() {
 
@@ -23,20 +22,20 @@ module.exports = function(grunt) {
       processContent: false,
       processContentExclude: [],
       timestamp: false,
-      mode: false,
+      mode: false
     });
 
     var copyOptions = {
       encoding: options.encoding,
       process: options.process || options.processContent,
-      noProcess: options.noProcess || options.processContentExclude,
+      noProcess: options.noProcess || options.processContentExclude
     };
 
     var isExpandedPair;
     var dirs = {};
     var tally = {
       dirs: 0,
-      files: 0,
+      files: 0
     };
 
     this.files.forEach(function(filePair) {
@@ -115,7 +114,7 @@ module.exports = function(grunt) {
       return;
     }
 
-    if (stat.isFile() && !fileSyncCmp.equalFiles(src, dest)) {
+    if (stat.isFile()) {
       return;
     }
 

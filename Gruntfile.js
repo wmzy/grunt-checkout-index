@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 				'test/**/*.js'
 			],
 			options: {
-				config: ".jscsrc",
+				config: '.jscsrc',
 				verbose: true // If you need output with rule names http://jscs.info/overview.html#verbose
 			}
 		},
