@@ -7,33 +7,60 @@ var git = require('nodegit');
 
 var fixtures = path.join(__dirname, 'fixtures');
 var gitFiles = path.join(fixtures, 'git-files');
+var gitFilesInRepository = path.join(gitFiles, 'repository');
+var gitFilesInIndex = path.join(gitFiles, 'index');
+var gitFilesInWork = path.join(gitFiles, 'work');
 var spawn = require('child_process').spawn;
 var tmpdir = path.join(os.tmpdir(), 'grunt-copy-git-index');
 var gitDir = path.join(tmpdir, 'git-repository');
 var indexFilesDir = path.join(tmpdir, 'index-files');
-var repository;
 
 describe('grunt-copy-git-index', function () {
   describe('when run with no options specified', function () {
     before(function (done) {
-      // create git repository
+      // Create git repository
 
+      var promiseResults = {};
       grunt.file.delete(gitDir, {force: true});
       grunt.file.mkdir(gitDir);
 
-      grunt.file.recurse(gitFiles, function (abspath, rootdir, subdir, filename) {
-        grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
-      });
       git.Repository.init(gitDir, 0).then(function (repo) {
-        repository = repo;
+        promiseResults.repository = repo;
         console.log('git workdir:', repo.workdir());
         return repo.index();
       }).then(function (index) {
-        var returnCode = index.addByPath('app.js') || index.write();
-        if (returnCode) return done(new Error('git add files failed with code ' + returnCode));
+        promiseResults.index = index;
+        grunt.file.recurse(gitFilesInRepository, function (abspath, rootdir, subdir, filename) {
+          grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
+        });
+        return index.addAll();
+      }).then(function (returnCode) {
+        if (returnCode || promiseResults.index.write()) throw new Error('git add files failed with code ' + returnCode);
         console.log('git add files success');
+
+        // Commit files
+        return promiseResults.index.writeTree();
+      }).then(function (oid) {
+        promiseResults.oid = oid;
+        var author = git.Signature.now('wmzy', '1256573276@qq.com');
+        var committer = author;
+        return promiseResults.repository
+          .createCommit('HEAD', author, committer, 'first commit, no HEAD', oid, []);
+      }).then(function (commitId) {
+        grunt.file.recurse(gitFilesInIndex, function (abspath, rootdir, subdir, filename) {
+          grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
+        });
+        return promiseResults.index.addAll();
+      }).then(function (returnCode) {
+        if (returnCode || promiseResults.index.write()) throw new Error('git add files failed with code ' + returnCode);
+        console.log('git add files success');
+
+        grunt.file.recurse(gitFilesInWork, function (abspath, rootdir, subdir, filename) {
+          grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
+        });
+
         done();
-      }, done);
+      }).catch(done);
     });
 
     it('should copy files from git index', function () {
