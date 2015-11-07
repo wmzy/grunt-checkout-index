@@ -14,7 +14,10 @@
 	"disallowTrailingWhitespace": true,
 	"maximumLineLength": 120,
 	"requireCamelCaseOrUpperCaseIdentifiers": true,
-	"requireCapitalizedComments": true,
+	"requireCapitalizedComments": {
+		"allExcept": ["var", "if", "else"],
+		"inlined": true
+	},
 	"requireCapitalizedConstructors": true,
 	"requireCurlyBraces": ["else", "try", "catch"],
 	"requireSpaceAfterKeywords": [
@@ -38,12 +41,10 @@
 	"requireSpacesInFunction": {
 		"beforeOpeningCurlyBrace": true
 	},
-	"requireTrailingComma": {
-		"ignoreSingleLine": true
-	},
+	"requireTrailingComma": false,
 	"validateIndentation": 2,
 	"validateLineBreaks": "LF",
 	"validateQuoteMarks": "'",
 	"verbose": true,
-	"maxErrors": 20
+	"maxErrors": null
 }
