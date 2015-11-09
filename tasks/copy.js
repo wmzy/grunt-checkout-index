@@ -1,3 +1,4 @@
+// jscs: disable
 /*
  * grunt-copy-git-index
  * http://gruntjs.com/

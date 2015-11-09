@@ -33,6 +33,15 @@ module.exports = function (grunt) {
         verbose: true // If you need output with rule names http://jscs.info/overview.html#verbose
       }
     },
+    watch: {
+      develop: {
+        files: ['task/**/*.js', 'test/*.js'],
+        tasks: ['mochaTest'],
+        options: {
+          spawn: false
+        }
+      }
+    },
     mochaTest: {
       src: ['test/*.js'],
       options: {
@@ -56,10 +65,11 @@ module.exports = function (grunt) {
   // Load NPM tasks
   require('load-grunt-tasks')(grunt);
 
-  // Whenever the "test" task is run, run the "unit-test" task.
+  // Whenever the "test" task is run, run the "mochaTest" task.
   grunt.registerTask('test', ['jshint', 'jscs', 'mochaTest']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['test', 'build']);
 
+  grunt.registerTask('dev', ['mochaTest', 'watch:develop']);
 };

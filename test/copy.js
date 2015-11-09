@@ -46,7 +46,7 @@ describe('grunt-copy-git-index', function () {
         var committer = author;
         return promiseResults.repository
           .createCommit('HEAD', author, committer, 'first commit, no HEAD', oid, []);
-      }).then(function (commitId) {
+      }).then(function () {
         grunt.file.recurse(gitFilesInIndex, function (abspath, rootdir, subdir, filename) {
           grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
         });
