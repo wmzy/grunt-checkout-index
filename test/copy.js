@@ -2,6 +2,7 @@
 
 var os = require('os');
 var path = require('path');
+var fs = require('fs');
 var grunt = require('grunt');
 var git = require('nodegit');
 
@@ -59,15 +60,20 @@ describe('grunt-copy-git-index', function () {
           grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
         });
 
+        // Node bug:fs.symlinkSync(path.join(tmpdir, 'node_modules'), path.resolve('node_modules'), 'dir');
+        grunt.file.recurse(path.resolve('./node_modules/grunt'), function (abspath, rootdir, subdir, filename) {
+          grunt.file.copy(abspath, path.join(tmpdir, './node_modules/grunt', subdir || '', filename));
+        });
+
         done();
       }).catch(done);
     });
 
     it('should copy files from git index', function (done) {
       var copyProcess = spawn(
-        'grunt',
-        ['--tasks', path.resolve('tasks'), 'copyGitIndex:withoutOptions'],
-        {cwd: gitDir}
+        path.resolve('./node_modules/.bin/grunt'),
+        ['--tasks', path.resolve('tasks'), '--gruntfile', path.join(gitDir, 'Gruntfile.js'), 'copyGitIndex:withoutOptions'],
+        {cwd: gitDir, stdio: 'inherit'}
       );
       copyProcess.on('close', function () {
         grunt.file.recurse(gitFilesInIndex, function (abspath, rootdir, subdir, filename) {

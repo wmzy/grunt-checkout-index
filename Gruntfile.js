@@ -35,7 +35,7 @@ module.exports = function (grunt) {
     },
     watch: {
       develop: {
-        files: ['task/**/*.js', 'test/*.js'],
+        files: ['tasks/**.js', 'test/*.js'],
         tasks: ['mochaTest'],
         options: {
           spawn: false,
@@ -47,6 +47,7 @@ module.exports = function (grunt) {
       src: ['test/*.js'],
       options: {
         reporter: 'spec',
+        clearRequireCache: true,
         require: [
           function () {
             var should = require('should');
@@ -72,5 +73,5 @@ module.exports = function (grunt) {
   // By default, lint and run all tests.
   grunt.registerTask('default', ['test', 'build']);
 
-  grunt.registerTask('dev', ['mochaTest', 'watch:develop']);
+  grunt.registerTask('dev', ['watch:develop']);
 };
