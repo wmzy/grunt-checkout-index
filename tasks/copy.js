@@ -15,8 +15,7 @@ module.exports = function(grunt) {
   var fs = require('fs');
   var chalk = require('chalk');
 
-  grunt.registerMultiTask('copy-git-index', 'Copy files from git index.', function() {
-
+  grunt.registerMultiTask('copyGitIndex', 'Copy files from git index.', function() {
     var options = this.options({
       encoding: grunt.file.defaultEncoding,
       // processContent/processContentExclude deprecated renamed to process/noProcess
@@ -39,6 +38,8 @@ module.exports = function(grunt) {
       files: 0
     };
 
+    console.log('hello');
+    return;
     this.files.forEach(function(filePair) {
       isExpandedPair = filePair.orig.expand || false;
 
