@@ -63,7 +63,24 @@ describe('grunt-copy-git-index', function () {
       }).catch(done);
     });
 
-    it('should copy files from git index', function () {
+    it('should copy files from git index', function (done) {
+      var copyProcess = spawn(
+        'grunt',
+        ['--tasks', path.resolve('tasks'), 'copyGitIndex:withoutOptions'],
+        {cwd: gitDir}
+      );
+      copyProcess.on('close', function () {
+        grunt.file.recurse(gitFilesInIndex, function (abspath, rootdir, subdir, filename) {
+          grunt.file.exists(indexFilesDir, subdir || '', filename).should.be.ok();
+        });
+        grunt.file.recurse(indexFilesDir, function (abspath, rootdir, subdir, filename) {
+          grunt.file.exists(gitFilesInIndex, subdir || '', filename).should.be.ok();
+        });
+
+        done();
+      });
+
+      copyProcess.on('error', done);
     });
   });
 });
