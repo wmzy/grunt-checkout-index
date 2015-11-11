@@ -2,7 +2,7 @@
 
 var os = require('os');
 var path = require('path');
-var fs = require('fs');
+// var fs = require('fs');
 var grunt = require('grunt');
 var git = require('nodegit');
 
@@ -27,13 +27,10 @@ describe('grunt-copy-git-index', function () {
 
       git.Repository.init(gitDir, 0).then(function (repo) {
         promiseResults.repository = repo;
-        console.log('git workdir:', repo.workdir());
         return repo.index();
       }).then(function (index) {
         promiseResults.index = index;
-        grunt.file.recurse(gitFilesInRepository, function (abspath, rootdir, subdir, filename) {
-          grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
-        });
+        copyDir(gitFilesInRepository, gitDir);
         return index.addAll();
       }).then(function (returnCode) {
         if (returnCode || promiseResults.index.write()) throw new Error('git add files failed with code ' + returnCode);
@@ -48,22 +45,16 @@ describe('grunt-copy-git-index', function () {
         return promiseResults.repository
           .createCommit('HEAD', author, committer, 'first commit, no HEAD', oid, []);
       }).then(function () {
-        grunt.file.recurse(gitFilesInIndex, function (abspath, rootdir, subdir, filename) {
-          grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
-        });
+        copyDir(gitFilesInIndex, gitDir);
         return promiseResults.index.addAll();
       }).then(function (returnCode) {
         if (returnCode || promiseResults.index.write()) throw new Error('git add files failed with code ' + returnCode);
         console.log('git add files success');
 
-        grunt.file.recurse(gitFilesInWork, function (abspath, rootdir, subdir, filename) {
-          grunt.file.copy(abspath, path.join(gitDir, subdir || '', filename));
-        });
+        copyDir(gitFilesInWork, gitDir);
 
         // Node bug:fs.symlinkSync(path.join(tmpdir, 'node_modules'), path.resolve('node_modules'), 'dir');
-        grunt.file.recurse(path.resolve('./node_modules/grunt'), function (abspath, rootdir, subdir, filename) {
-          grunt.file.copy(abspath, path.join(tmpdir, './node_modules/grunt', subdir || '', filename));
-        });
+        copyDir(path.resolve('./node_modules/grunt'), path.join(tmpdir, './node_modules/grunt'));
 
         done();
       }).catch(done);
@@ -72,7 +63,11 @@ describe('grunt-copy-git-index', function () {
     it('should copy files from git index', function (done) {
       var copyProcess = spawn(
         path.resolve('./node_modules/.bin/grunt'),
-        ['--tasks', path.resolve('tasks'), '--gruntfile', path.join(gitDir, 'Gruntfile.js'), 'copyGitIndex:withoutOptions'],
+        [
+          '--tasks', path.resolve('tasks'),
+          '--gruntfile', path.join(gitDir, 'Gruntfile.js'),
+          'copyGitIndex:withoutOptions'
+        ],
         {cwd: gitDir, stdio: 'inherit'}
       );
       copyProcess.on('close', function () {
@@ -90,3 +85,9 @@ describe('grunt-copy-git-index', function () {
     });
   });
 });
+
+function copyDir(source, dest) {
+  grunt.file.recurse(source, function (abspath, rootdir, subdir, filename) {
+    grunt.file.copy(abspath, path.join(dest, subdir || '', filename));
+  });
+}
