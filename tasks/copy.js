@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     var taskDone = this.async();
     var filesInIndex = [];
     var promiseResults = {};
-    git.Repository.open('./.git').then(function (repository) {
+    git.Repository.open('.git').then(function (repository) {
       promiseResults.repository = repository;
       return Status.foreachExt(repository, {show: Status.SHOW.INDEX_ONLY}, function (file) {
         filesInIndex.push(file);
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         checkoutStrategy: Checkout.STRATEGY.FORCE
       });
     }).then(function () {
-      return taskDone();
+      taskDone();
     }).catch(taskDone);
   });
 };

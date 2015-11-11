@@ -8,17 +8,18 @@
 'use strict';
 
 module.exports = function (grunt) {
-  // Project configuration.
   grunt.initConfig({
     copyGitIndex: {
-      withoutOptions: {
+      withoutExtraOptions: {
+      },
+      override: {
         options: {
-          targetDirectory: '../index-files'
+          clean: false
         }
+      },
+      options: {
+        targetDirectory: '../index-files'
       }
     }
   });
-
-  // Actually load this plugin's task(s).
-  // grunt.loadTasks('tasks');
 };
