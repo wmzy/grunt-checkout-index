@@ -1,7 +1,7 @@
 {
   "name": "grunt-copy-git-index",
   "description": "Copy files from git index for code check.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "wmzy",
     "url": "https://github.com/wmzy"
