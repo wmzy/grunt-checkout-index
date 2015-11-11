@@ -23,7 +23,7 @@ grunt.loadNpmTasks('grunt-copy-git-index');
 
 
 ## Copy-git-index task
-_Run this task with the `grunt copy-git-index` command._
+_Run this task with the `grunt copyGitIndex` command._
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 
@@ -31,5 +31,14 @@ Task targets, files and options may be specified according to the grunt [Configu
 ### Options
 
 
-#### globals
+#### targetDirectory
+Type: `String`  
+Default: `null`
 
+You should give this option to point where to save your files.
+
+#### clean
+Type: `Boolean`  
+Default: `true`
+
+Clean the target directory before checkout files.
