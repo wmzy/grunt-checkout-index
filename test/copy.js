@@ -52,6 +52,7 @@ describe('grunt-copy-git-index', function () {
         console.log('git add files success');
 
         copyDir(gitFilesInWork, gitDir);
+        copyDir(gitFilesInWork, indexFilesDir);
 
         // Node bug:fs.symlinkSync(path.join(tmpdir, 'node_modules'), path.resolve('node_modules'), 'dir');
         copyDir(path.resolve('./node_modules/grunt'), path.join(tmpdir, './node_modules/grunt'));

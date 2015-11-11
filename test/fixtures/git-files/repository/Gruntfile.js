@@ -12,7 +12,9 @@ module.exports = function (grunt) {
   grunt.initConfig({
     copyGitIndex: {
       withoutOptions: {
-        files: [{src: ['**.*'], dest: '../index-files'}]
+        options: {
+          targetDirectory: '../index-files'
+        }
       }
     }
   });
