@@ -1,7 +1,7 @@
 {
   "name": "grunt-checkout-index",
   "description": "Checkout files from git index.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "wmzy",
     "url": "https://github.com/wmzy"
@@ -36,9 +36,9 @@
   },
   "keywords": [
     "gruntplugin",
-	  "git",
-	  "index",
-	  "checkout"
+    "git",
+    "index",
+    "checkout"
   ],
   "files": [
     "tasks"
