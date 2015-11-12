@@ -1,2 +1,2 @@
 ###file in index
-should be copy
+should be checkout

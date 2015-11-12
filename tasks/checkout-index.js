@@ -1,10 +1,10 @@
 /*
- * grunt-copy-git-index
+ * grunt-checkout-index
  * http://gruntjs.com/
  *
  * Copyright (c) 2015 wmzy
  * Licensed under the MIT license.
- * https://github.com/wmzy/grunt-copy-git-index/blob/master/LICENSE-MIT
+ * https://github.com/wmzy/grunt-checkout-index/blob/master/LICENSE-MIT
  */
 
 module.exports = function(grunt) {
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
   var Checkout = git.Checkout;
   var _ = grunt.util._;
 
-  grunt.registerMultiTask('copyGitIndex', 'Copy files from git index.', function() {
+  grunt.registerMultiTask('checkoutIndex', 'Checkout files from git index.', function() {
     var options = this.options({
       targetDirectory: null,
       clean: true

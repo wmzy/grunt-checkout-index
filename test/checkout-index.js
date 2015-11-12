@@ -12,11 +12,11 @@ var gitFilesInRepository = path.join(gitFiles, 'repository');
 var gitFilesInIndex = path.join(gitFiles, 'index');
 var gitFilesInWork = path.join(gitFiles, 'work');
 var spawn = require('child_process').spawn;
-var tmpdir = path.join(os.tmpdir(), 'grunt-copy-git-index');
+var tmpdir = path.join(os.tmpdir(), 'grunt-checkout-index');
 var gitDir = path.join(tmpdir, 'git-repository');
 var indexFilesDir = path.join(tmpdir, 'index-files');
 
-describe('grunt-copy-git-index', function () {
+describe('grunt-checkout-index', function () {
   before(function (done) {
     // Create git repository
 
@@ -59,22 +59,22 @@ describe('grunt-copy-git-index', function () {
   });
   describe('when run with no extra options', function () {
     before(function (done) {
-      var copyProcess = spawn(
+      var cp = spawn(
         path.resolve('./node_modules/.bin/grunt'),
         [
           '--tasks', path.resolve('tasks'),
           '--gruntfile', path.join(gitDir, 'Gruntfile.js'),
-          'copyGitIndex:withoutExtraOptions'
+          'checkoutIndex:withoutExtraOptions'
         ],
         // {cwd: gitDir, stdio: 'inherit'}
         {cwd: gitDir}
       );
 
-      copyProcess.on('close', done);
-      copyProcess.on('error', done);
+      cp.on('close', done);
+      cp.on('error', done);
     });
 
-    it('should copy files from git index', function () {
+    it('should checkout files from git index', function () {
       grunt.file.recurse(gitFilesInIndex, function (abspath, rootdir, subdir, filename) {
         grunt.file.exists(indexFilesDir, subdir || '', filename).should.be.ok();
       });

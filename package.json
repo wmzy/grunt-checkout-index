@@ -1,12 +1,12 @@
 {
-  "name": "grunt-copy-git-index",
-  "description": "Copy files from git index for code check.",
+  "name": "grunt-checkout-index",
+  "description": "Checkout files from git index.",
   "version": "0.1.2",
   "author": {
     "name": "wmzy",
     "url": "https://github.com/wmzy"
   },
-  "repository": "wmzy/grunt-copy-git-index",
+  "repository": "wmzy/grunt-checkout-index",
   "license": "MIT",
   "engines": {
     "node": ">=0.10.0"

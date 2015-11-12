@@ -1,5 +1,5 @@
 /*
- * Grunt-copy-git-index
+ * Grunt-checkout-index
  *
  * Copyright (c) 2015 wmzy
  * Licensed under the MIT license.
@@ -9,7 +9,7 @@
 
 module.exports = function (grunt) {
   grunt.initConfig({
-    copyGitIndex: {
+    checkoutIndex: {
       withoutExtraOptions: {
       },
       override: {

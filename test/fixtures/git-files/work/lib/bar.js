@@ -1,6 +1,6 @@
 /**
  * File in work
- * should not be copy
+ * should not be checkout
  */
 
 'use strict';

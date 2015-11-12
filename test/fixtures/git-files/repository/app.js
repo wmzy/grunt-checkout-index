@@ -1,6 +1,6 @@
 /**
  * File in repository
- * should not be copy
+ * should not be checkout
  */
 
 'use strict';
