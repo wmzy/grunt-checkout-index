@@ -2,6 +2,9 @@
 
 > Checkout files from git index.
 
+>Maybe you want use code quality tools(such as jshint, jscs) check your code before git-commit.
+>Use this tool checkout all files in git-index to a directory...
+
 
 
 ## Getting Started
