@@ -1,4 +1,4 @@
-# grunt-checkout-index v0.0.0 [![Build Status: Linux](https://travis-ci.org/wmzy/grunt-checkout-index.svg?branch=master)](https://travis-ci.org/wmzy/grunt-checkout-index) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/j04ik7qgx21ixyfw/branch/master?svg=true)](https://ci.appveyor.com/project/wmzy/grunt-checkout-index/branch/master)
+# grunt-checkout-index  [![Build Status: Linux](https://travis-ci.org/wmzy/grunt-checkout-index.svg?branch=master)](https://travis-ci.org/wmzy/grunt-checkout-index) [![Build Status: Windows](https://ci.appveyor.com/api/projects/status/j04ik7qgx21ixyfw/branch/master?svg=true)](https://ci.appveyor.com/project/wmzy/grunt-checkout-index/branch/master)
 
 > Checkout files from git index.
 
